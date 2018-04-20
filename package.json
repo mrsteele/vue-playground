@@ -1,0 +1,16 @@
+{
+  "name": "vue-playground",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start"
+  },
+  "author": "Matt Steele <matt@omnionline.us> (http://omnionline.us/)",
+  "license": "ISC",
+  "dependencies": {
+    "nuxt": "^1.4.0"
+  }
+}
