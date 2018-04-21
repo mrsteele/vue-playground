@@ -1,27 +1,31 @@
 <template>
-  <main>
+  <main-layout>
     <h1>Todo</h1>
-    <form v-on:submit="add">
-      <input v-model="newTodo" placeholder="type something and press 'enter'" />
-    </form>
-    <ul class="todos">
-      <li v-for="todo in todos" v-bind:class="{ completed: todo.complete }" v-on:click="toggle(todo.id)">
-        {{ todo.text }}
-      </li>
-    </ul>
-  </main>
+    <p>A simple todo app I created</p>
+    <new-todo v-on:add="add"></new-todo>
+    <div>
+      <todo-item
+        v-for="todo in todos"
+        :key="todo.id"
+        :text="todo.text"
+        :complete="todo.complete"
+        v-on:toggle="toggle(todo.id)"
+      ></todo-item>
+    </div>
+  </main-layout>
 </template>
 
-<style>
-.todos li { cursor: pointer; }
-.todos li:hover { color: blue; }
-.completed { text-decoration: line-through; }
+<style scoped>
+  h1, p { margin-top: 0; }
 </style>
 
 <script>
+import MainLayout from '../components/MainLayout.vue'
+import TodoItem from '../components/TodoItem.vue'
+import NewTodo from '../components/NewTodo.vue'
+
 export default {
   data: () => ({
-    newTodo: '',
     todos: [{
       id: 1,
       complete: false,
@@ -36,6 +40,11 @@ export default {
       text: 'third'
     }]
   }),
+  components: {
+    MainLayout,
+    NewTodo,
+    TodoItem
+  },
   methods: {
     toggle: function (id) {
       const todo = this.todos.find(todo => todo.id === id)
@@ -44,14 +53,12 @@ export default {
         todo.complete = !todo.complete
       }
     },
-    add: function (e) {
-      e.preventDefault()
+    add: function (text) {
       this.todos.unshift({
+        text,
         id: Date.now(),
-        text: this.newTodo,
         complete: false
       })
-      this.newTodo = ''
     }
   },
   head () {
