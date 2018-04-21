@@ -1,6 +1,9 @@
 <template>
   <main>
     <h1>Todo</h1>
+    <form v-on:submit="add">
+      <input v-model="newTodo" placeholder="type something and press 'enter'" />
+    </form>
     <ul class="todos">
       <li v-for="todo in todos" v-bind:class="{ completed: todo.complete }" v-on:click="toggle(todo.id)">
         {{ todo.text }}
@@ -18,6 +21,7 @@
 <script>
 export default {
   data: () => ({
+    newTodo: '',
     todos: [{
       id: 1,
       complete: false,
@@ -39,6 +43,15 @@ export default {
         console.log('here', todo)
         todo.complete = !todo.complete
       }
+    },
+    add: function (e) {
+      e.preventDefault()
+      this.todos.unshift({
+        id: Date.now(),
+        text: this.newTodo,
+        complete: false
+      })
+      this.newTodo = ''
     }
   },
   head () {
