@@ -9,6 +9,7 @@
         :key="todo.id"
         :todo="todo"
         v-on:toggle="toggle(todo.id)"
+        v-on:delete="remove(todo.id)"
       ></todo-item>
     </div>
   </main-layout>
@@ -62,6 +63,10 @@ export default {
         hidden: false
       })
       this.filter()
+    },
+    remove: function (id) {
+      const i = this.todos.findIndex(todo => todo.id === id)
+      this.todos.splice(i, 1)
     },
     filter: function (search) {
       if (search) {
