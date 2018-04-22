@@ -1,6 +1,13 @@
 <template>
-  <div class="item" v-bind:class="{ completed: complete }" v-on:click="$emit('toggle')">
-    <input type="checkbox" class="checkbox" v-model="complete" /> {{ text }}
+  <div
+    class="item"
+    v-bind:class="{
+      completed: todo.complete,
+      hidden: todo.hidden
+    }"
+    v-on:click="$emit('toggle')"
+  >
+    <input type="checkbox" class="checkbox" v-model="todo.complete" /> {{ todo.text }}
   </div>
 </template>
 
@@ -12,6 +19,8 @@
     margin-bottom: 0.2em;
     cursor: pointer;
   }
+
+  .item.hidden { display: none; }
 
   .item:hover {
     color: #999;
@@ -29,6 +38,6 @@
 
 <script>
 export default {
-  props: ['text', 'complete']
+  props: ['todo']
 }
 </script>

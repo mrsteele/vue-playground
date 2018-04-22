@@ -1,6 +1,6 @@
 <template>
   <form v-on:submit="add">
-    <input v-model="newTodo" placeholder="type something and press 'enter'" />
+    <input v-model.trim="newTodo" @input="search" placeholder="search or add a new todo item..." />
   </form>
 </template>
 
@@ -32,6 +32,9 @@ export default {
       e.preventDefault()
       this.$emit('add', this.newTodo)
       this.newTodo = ''
+    },
+    search: function (e) {
+      this.$emit('search', this.newTodo)
     }
   }
 }

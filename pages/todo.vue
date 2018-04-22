@@ -2,13 +2,12 @@
   <main-layout>
     <h1>Todo</h1>
     <p>A simple todo app I created</p>
-    <new-todo v-on:add="add"></new-todo>
+    <new-todo v-on:add="add" v-on:search="filter"></new-todo>
     <div>
       <todo-item
         v-for="todo in todos"
         :key="todo.id"
-        :text="todo.text"
-        :complete="todo.complete"
+        :todo="todo"
         v-on:toggle="toggle(todo.id)"
       ></todo-item>
     </div>
@@ -29,14 +28,17 @@ export default {
     todos: [{
       id: 1,
       complete: false,
+      hidden: false,
       text: 'first thing'
     }, {
       id: 2,
       complete: false,
+      hidden: false,
       text: 'second thing'
     }, {
       id: 3,
       complete: false,
+      hidden: false,
       text: 'third'
     }]
   }),
@@ -49,7 +51,6 @@ export default {
     toggle: function (id) {
       const todo = this.todos.find(todo => todo.id === id)
       if (todo) {
-        console.log('here', todo)
         todo.complete = !todo.complete
       }
     },
@@ -57,8 +58,19 @@ export default {
       this.todos.unshift({
         text,
         id: Date.now(),
-        complete: false
+        complete: false,
+        hidden: false
       })
+      this.filter()
+    },
+    filter: function (search) {
+      if (search) {
+        this.todos.forEach(todo => {
+          todo.hidden = todo.text.toLowerCase().indexOf(search.toLowerCase()) === -1
+        })
+      } else {
+        this.todos.forEach(todo => todo.hidden = false)
+      }
     }
   },
   head () {
