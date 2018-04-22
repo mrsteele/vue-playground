@@ -1,22 +1,43 @@
 <template>
   <main-layout>
-    <h1>Todo</h1>
-    <p>A simple todo app I created</p>
+    <input class="title" type="text" v-model="title" />
     <new-todo v-on:add="add" v-on:search="filter"></new-todo>
-    <div>
+    <div class="todos">
       <todo-item
         v-for="todo in todos"
         :key="todo.id"
         :todo="todo"
-        v-on:toggle="toggle(todo.id)"
         v-on:delete="remove(todo.id)"
       ></todo-item>
     </div>
+
+    <footer>Made as an experiment by <a href="https://twitter.com/matt_r_steele" target="_blank">Matthew Steele</a>.</footer>
   </main-layout>
 </template>
 
 <style scoped>
-  h1, p { margin-top: 0; }
+  .title {
+    background: none;
+    border: none;
+    font-size: 2em;
+    margin-bottom: 0.5em;
+    outline: none;
+    border: solid 1px transparent;
+    width: 100%;
+  }
+
+  .title:hover { border-color: #ccc; }
+
+  .todos { margin-bottom: 2em; }
+
+  footer {
+    text-align: center;
+    font-size: 0.8em;
+    color: #999;
+  }
+
+  footer a { color: inherit; }
+  footer a:hover { text-decoration: none; }
 </style>
 
 <script>
@@ -26,6 +47,7 @@ import NewTodo from '../components/NewTodo.vue'
 
 export default {
   data: () => ({
+    title: 'Todos',
     todos: [{
       id: 1,
       complete: false,
@@ -49,12 +71,6 @@ export default {
     TodoItem
   },
   methods: {
-    toggle: function (id) {
-      const todo = this.todos.find(todo => todo.id === id)
-      if (todo) {
-        todo.complete = !todo.complete
-      }
-    },
     add: function (text) {
       this.todos.unshift({
         text,
