@@ -1,13 +1,13 @@
 <template>
   <div
     class="item"
-    v-on:click="$emit('toggle')"
     v-bind:class="{
       completed: todo.complete,
       hidden: todo.hidden
     }"
   >
-    <input type="checkbox" class="checkbox" v-model="todo.complete" /> {{ todo.text }}
+    <input type="checkbox" v-model="todo.complete" />
+    <input type="text" class="text" v-model="todo.text" />
     <button class="delete" type="button" v-on:click="$emit('delete')">
       &times;
     </button>
@@ -17,32 +17,32 @@
 <style scoped>
   .item {
     user-select: none;
-    padding: 1em;
+    padding: 1em 0.5em;
     background: #fff;
     margin-bottom: 0.2em;
-    cursor: pointer;
-    position: relative;
+    display: flex;
+    align-items: center;
   }
 
   .item.hidden { display: none; }
 
-  .item:hover {
-    color: #999;
+  .text {
+    font-size: inherit;
+    border: none;
+    outline: none;
+    border: solid 1px transparent;
+    width: 100%;
   }
 
-  .checkbox {
-    pointer-events: none;
+  .text:hover, .text:focus {
+    border-color: #ccc;
   }
 
   .delete {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 2em;
-    position: absolute;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    font-size: 1em;
     opacity: 0;
     transition: opacity 0.2s ease-out;
   }
