@@ -11,6 +11,10 @@
   "author": "Matt Steele <matt@omnionline.us> (http://omnionline.us/)",
   "license": "ISC",
   "dependencies": {
+    "crypto-js": "^3.1.9-1",
     "nuxt": "^1.4.0"
+  },
+  "devDependencies": {
+    "standard": "^11.0.1"
   }
 }
